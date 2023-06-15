@@ -12,10 +12,37 @@ fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
             estados += `<option value=${estado.sigla}>${estado.nome}</option>`
             
         );
-console.log(estados)
+
+
 inputEstado.innerHTML = estados
     })
     
 }
 
 findEstados()
+
+function findByCep(){
+    //pega o valor do cep digitado pelo usuario atraves do id cep do HTML
+
+    let cepValue = cep.value
+    //console.log(cepValue);
+
+    fetch(`https://viacep.com.br/ws/${cepValue}/json/`)
+    .then(Response => Response.json())
+    .then(json => {
+        //console.log(json)
+        preencherCampos(json)
+
+    })
+}
+
+const preencherCampos = json => {
+    console.log(json)
+    logradouro.value = json.logradouro
+    numero.focus()
+    bairro.value = json.bairro
+    complemento.value = json.complemento
+
+
+
+}
